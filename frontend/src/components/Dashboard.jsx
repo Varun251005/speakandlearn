@@ -101,7 +101,7 @@ export default function Dashboard() {
       const message = messages[event.error] || `Speech recognition error: ${event.error}`;
       setListeningError(message);
 
-      if (event.error === 'not-allowed' || event.error === 'network') {
+      if (event.error === 'not-allowed') {
         alert(message);
       }
     };
@@ -152,6 +152,10 @@ export default function Dashboard() {
     window.location.reload();
   };
 
+  const backToHome = () => {
+    window.location.reload();
+  };
+
   if (sessionEnded && finalReport) {
     // Prepare chart data
     const radarData = [
@@ -176,6 +180,10 @@ export default function Dashboard() {
       <div className="dashboard">
         <div className="session-report">
           <div className="report-header">
+            <button className="btn-back-home" onClick={backToHome} aria-label="Back to home">
+              <span className="btn-icon">←</span>
+              <span className="btn-back-text">Back</span>
+            </button>
             <div className="report-icon">🎉</div>
             <h1>Session Complete!</h1>
             <p>Here's your comprehensive performance analysis</p>
