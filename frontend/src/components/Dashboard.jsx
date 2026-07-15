@@ -15,6 +15,7 @@ export default function Dashboard() {
   const [sessionId] = useState(`session-${Date.now()}`);
   const [sessionEnded, setSessionEnded] = useState(false);
   const [finalReport, setFinalReport] = useState(null);
+  const [listeningError, setListeningError] = useState('');
   
   const chatEndRef = useRef(null);
 
@@ -58,9 +59,12 @@ export default function Dashboard() {
 
   const startListening = () => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    setListeningError('');
     
     if (!SpeechRecognition) {
-      alert('Speech recognition not supported in your browser. Please use Chrome or Edge.');
+      const message = 'Speech recognition not supported in your browser. Please use Chrome or Edge.';
+      setListeningError(message);
+      alert(message);
       return;
     }
 
@@ -85,8 +89,20 @@ export default function Dashboard() {
     recognition.onerror = (event) => {
       console.error('Speech recognition error:', event.error);
       setIsActive(false);
-      if (event.error === 'not-allowed') {
-        alert('Microphone access denied. Please allow microphone permissions.');
+
+      const messages = {
+        'not-allowed': 'Microphone access denied. Please allow microphone permissions.',
+        'network': 'Speech recognition could not reach its service. Check your internet connection or browser network access.',
+        'no-speech': 'No speech was detected. Try speaking a little louder and closer to the microphone.',
+        'audio-capture': 'No microphone was found or it is already in use by another app.',
+        'service-not-allowed': 'Speech recognition is blocked in this browser or environment.'
+      };
+
+      const message = messages[event.error] || `Speech recognition error: ${event.error}`;
+      setListeningError(message);
+
+      if (event.error === 'not-allowed' || event.error === 'network') {
+        alert(message);
       }
     };
 
@@ -434,6 +450,7 @@ export default function Dashboard() {
               <span className="hint-icon">💡</span>
               Say "end session" when you're done to get your detailed report
             </p>
+            {listeningError && <p className="hint error-hint">{listeningError}</p>}
           </div>
         </div>
       </div>
