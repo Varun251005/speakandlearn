@@ -1241,6 +1241,45 @@
   overflow: hidden;
 }
 
+.btn-back-home {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  background: rgba(0, 0, 0, 0.92);
+  color: #7FFFD4;
+  border: 2px solid #7FFFD4;
+  border-radius: 999px;
+  cursor: pointer;
+  z-index: 2;
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: 0 0 18px rgba(127, 255, 212, 0.55), inset 0 0 12px rgba(127, 255, 212, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.btn-back-home:hover {
+  transform: translateY(-2px);
+  background: #000000;
+  box-shadow: 0 0 28px rgba(127, 255, 212, 0.9), inset 0 0 16px rgba(127, 255, 212, 0.12);
+}
+
+.btn-back-home:active {
+  transform: translateY(0);
+}
+
+.btn-back-home .btn-icon {
+  font-size: 20px;
+  animation: none;
+}
+
+.btn-back-text {
+  letter-spacing: 0.2px;
+}
+
 .report-header::before {
   content: '';
   position: absolute;
@@ -1297,6 +1336,18 @@
   opacity: 0.95;
   font-weight: 500;
   text-shadow: 0 0 10px rgba(127, 255, 212, 0.8), 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+  .btn-back-home {
+    top: 16px;
+    left: 16px;
+    padding: 10px 14px;
+  }
+
+  .btn-back-text {
+    display: none;
+  }
 }
 
 .report-section {
